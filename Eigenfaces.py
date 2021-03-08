@@ -7,24 +7,7 @@ from matplotlib import image
 
 
 def power_iteration(M: np.ndarray, epsilon: float = -1.0) -> (np.ndarray, list):
-    """
-    Compute largest eigenvector of matrix M using power iteration. It is assumed that the
-    largest eigenvalue of M, in magnitude, is well separated.
-
-    Arguments:
-    M: matrix, assumed to have a well separated largest eigenvalue
-    epsilon: epsilon used for convergence (default: 10 * machine precision)
-
-    Return:
-    vector: eigenvector associated with largest eigenvalue
-    residuals : residual for each iteration step
-
-    Raised Exceptions:
-    ValueError: if matrix is not square
-
-    Forbidden:
-    numpy.linalg.eig, numpy.linalg.eigh, numpy.linalg.svd
-    """
+    
     if M.shape[0] != M.shape[1]:
         raise ValueError("Matrix not nxn")
 
@@ -81,19 +64,8 @@ def power_iteration(M: np.ndarray, epsilon: float = -1.0) -> (np.ndarray, list):
 # Exercise 2: Eigenfaces
 
 def load_images(path: str, file_ending: str=".png") -> (list, int, int):
-    """
-    Load all images in path with matplotlib that have given file_ending
-
-    Arguments:
-    path: path of directory containing image files that can be assumed to have all the same dimensions
-    file_ending: string that image files have to end with, if not->ignore file
-
-    Return:
-    images: list of images (each image as numpy.ndarray and dtype=float64)
-    dimension_x: size of images in x direction
-    dimension_y: size of images in y direction
-    """
-
+    
+    
     images = []
 
     #images = np.asarray(mpl.image.imread(images.append(lib.list_directory(path)), file_ending))
@@ -111,15 +83,7 @@ def load_images(path: str, file_ending: str=".png") -> (list, int, int):
 
 
 def setup_data_matrix(images: list) -> np.ndarray:
-    """
-    Create data matrix out of list of 2D data sets.
-
-    Arguments:
-    images: list of 2D images (assumed to be all homogeneous of the same size and type np.ndarray)
-
-    Return:
-    D: data matrix that contains the flattened images as rows
-    """
+    
     D = np.zeros((len(images), images[0].shape[1] * images[0].shape[0]))
 
     for i in range(len(images)):
@@ -131,18 +95,7 @@ def setup_data_matrix(images: list) -> np.ndarray:
 
 
 def calculate_pca(D: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarray):
-    """
-    Perform principal component analysis for given data matrix.
-
-    Arguments:
-    D: data matrix of size m x n where m is the number of observations and n the number of variables
-
-    Return:
-    pcs: matrix containing principal components as rows
-    svals: singular values associated with principle components
-    mean_data: mean that was subtracted from data
-    """
-
+ 
     #mean_data = np.zeros((D.shape[1]))
     mean_data = np.average(D, axis=0)
 #np.average(matrix, axis=0)
@@ -156,17 +109,7 @@ def calculate_pca(D: np.ndarray) -> (np.ndarray, np.ndarray, np.ndarray):
 
 
 def accumulated_energy(singular_values: np.ndarray, threshold: float = 0.8) -> int:
-    """
-    Compute index k so that threshold percent of magnitude of singular values is contained in
-    first k singular vectors.
 
-    Arguments:
-    singular_values: vector containing singular values
-    threshold: threshold for determining k (default = 0.8)
-
-    Return:
-    k: threshold index
-    """
     tmp = 0
     for i  in range(singular_values.shape[0]):
         tmp += singular_values[i]
@@ -182,17 +125,7 @@ def accumulated_energy(singular_values: np.ndarray, threshold: float = 0.8) -> i
 
 
 def project_faces(pcs: np.ndarray, images: list, mean_data: np.ndarray) -> np.ndarray:
-    """
-    Project given image set into basis.
-
-    Arguments:
-    pcs: matrix containing principal components / eigenfunctions as rows
-    images: original input  from which pcs were created
-    mean_data: mean data that was subtracted before computation of SVD/PCA
-
-    Return:
-    coefficients: basis function coefficients for input images, each row contains coefficients of one image
-    """
+  
 
     coefficients = np.zeros((len(images), pcs.shape[0]))
 
@@ -205,21 +138,7 @@ def project_faces(pcs: np.ndarray, images: list, mean_data: np.ndarray) -> np.nd
 
 def identify_faces(coeffs_train: np.ndarray, pcs: np.ndarray, mean_data: np.ndarray, path_test: str) -> (
 np.ndarray, list, np.ndarray):
-    """
-    Perform face recognition for test images assumed to contain faces.
 
-    For each image coefficients in the test data set the closest match in the training data set is calculated.
-    The distance between images is given by the angle between their coefficient vectors.
-
-    Arguments:
-    coeffs_train: coefficients for training images, each image is represented in a row
-    path_test: path to test image data
-
-    Return:
-    scores: Matrix with correlation between all train and test images, train images in rows, test images in columns
-    imgs_test: list of test images
-    coeffs_test: Eigenface coefficient of test images
-    """
 
     print(pcs)
     imgs_test = []

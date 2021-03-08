@@ -5,17 +5,7 @@ import numpy as np
 # Exercise 1: Interpolation
 
 def lagrange_interpolation(x: np.ndarray, y: np.ndarray) -> (np.poly1d, list):
-    """
-    Generate Lagrange interpolation polynomial.
-
-    Arguments:
-    x: x-values of interpolation points
-    y: y-values of interpolation points
-
-    Return:
-    polynomial: polynomial as np.poly1d object
-    base_functions: list of base polynomials
-    """
+   
 
     assert (x.size == y.size)
 
@@ -40,17 +30,7 @@ def lagrange_interpolation(x: np.ndarray, y: np.ndarray) -> (np.poly1d, list):
 
 
 def hermite_cubic_interpolation(x: np.ndarray, y: np.ndarray, yp: np.ndarray) -> list:
-    """
-    Compute hermite cubic interpolation spline
-
-    Arguments:
-    x: x-values of interpolation points
-    y: y-values of interpolation points
-    yp: derivative values of interpolation points
-
-    Returns:
-    spline: list of np.poly1d objects, each interpolating the function between two adjacent points
-    """
+ 
 
     assert (x.size == y.size == yp.size)
 
@@ -76,17 +56,7 @@ def hermite_cubic_interpolation(x: np.ndarray, y: np.ndarray, yp: np.ndarray) ->
 
 
 def natural_cubic_interpolation(x: np.ndarray, y: np.ndarray) -> list:
-    """
-    Intepolate the given function using a spline with natural boundary conditions.
-
-    Arguments:
-    x: x-values of interpolation points
-    y: y-values of interpolation points
-
-    Return:
-    spline: list of np.poly1d objects, each interpolating the function between two adjacent points
-    """
-
+  
     assert (x.size == y.size)
     g = x.size-1
     A = np.zeros((4 * g, 4 * g), dtype = np.float64)
@@ -153,16 +123,7 @@ def natural_cubic_interpolation(x: np.ndarray, y: np.ndarray) -> list:
 
 
 def periodic_cubic_interpolation(x: np.ndarray, y: np.ndarray) -> list:
-    """
-    Interpolate the given function with a cubic spline and periodic boundary conditions.
-
-    Arguments:
-    x: x-values of interpolation points
-    y: y-values of interpolation points
-
-    Return:
-    spline: list of np.poly1d objects, each interpolating the function between two adjacent points
-    """
+   
 
     assert (x.size == y.size)
     g = x.size-1
