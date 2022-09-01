@@ -1,0 +1,23 @@
+<launch>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find robo_arm_control)/config/robo_arm_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+	output="screen" ns="/robo_arm" args="joint_state_controller
+					  joint_body_position_controller
+					  joint_shoulder_position_controller
+            joint_elbow_position_controller
+            joint_finger1_position_controller
+            joint_finger2_position_controller
+            joint_finger3_position_controller
+            joint_finger4_position_controller"/>
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+	respawn="false" output="screen">
+    <remap from="/joint_states" to="/robo_arm/joint_states" />
+  </node>
+
+</launch>

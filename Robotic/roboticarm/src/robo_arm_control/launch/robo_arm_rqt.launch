@@ -1,0 +1,7 @@
+<launch>
+
+  <!-- Load RQT with a pre-setup GUI for Baxter controls from a perspective file  -->
+  <node name="robo_arm_rqt" pkg="rqt_gui" type="rqt_gui" respawn="false"
+	output="screen" args="--perspective-file $(find robo_arm_control)/launch/robo_arm_rqt.perspective"/>
+
+</launch>
